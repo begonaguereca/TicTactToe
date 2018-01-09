@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Board from './components/Board.jsx';
+import Headers from './components/Headers.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -16,7 +17,8 @@ class App extends React.Component {
   render () {
     return (
     <div>
-      <h1>Begoña's Tic Tac Toe Game</h1>
+      <h1>Tic Tac Toe</h1>
+      <Headers/>
       <Board/>
     </div>
   )}

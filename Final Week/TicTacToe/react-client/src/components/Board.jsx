@@ -4,6 +4,7 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      gameOn: true,
       nextUp: 'X',
       One: ' ',
       Two: ' ',
@@ -14,6 +15,7 @@ class Board extends React.Component {
       Seven: ' ',
       Eight: ' ',
       Nine: ' ',
+      winner: ''
     }
     this.handleClick = this.handleClick.bind(this);
   }
@@ -21,24 +23,72 @@ class Board extends React.Component {
   handleClick(e, num) {
     e.preventDefault();
 
-    //console.log(`${num}`)
-
-    `this.setState({
-      ${num}: ${this.state.nextUp}
-    })`
-
-    console.log('after:',this.state.One)
-
-    if (this.state.nextUp === 'X') {
-      this.setState({
-        nextUp: 'O'
-      })
+    //Starting a new Game
+    if(!this.state.gameOn) {
+      return alert("The Game is Over, please play again");
     } else {
-      this.setState({
-        nextUp: 'X'
-      })
+      //React does not allow ES6 to be used when calling setState so this is the work around
+      const myNum = num;
+      const obj = {[myNum]: this.state.nextUp};
+      this.setState(obj);
+
+      if (this.state.nextUp === 'X') {
+        if(!this.winnerCheck()){
+          this.setState({
+            nextUp: 'O'
+          });
+        } else {
+
+        }
+      } else {
+        if (!this.winnerCheck()){
+          this.setState({
+            nextUp: 'X'
+          });
+        }
+      }
     }
   }
+
+  winnerCheck () {
+    var checkBothXY = (curr) => {
+      if (this.state.One === curr && this.state.Two === curr && this.state.Three === curr) {
+        gameOver();
+        return alert(curr + " won the Game!!!!");
+      } else if (this.state.Four === curr && this.state.Five === curr && this.state.Six === curr) {
+        gameOver();
+        return alert(curr + " won the Game!!!!");
+      } else if (this.state.Seven === curr&& this.state.Eight === curr&& this.state.Nine === curr) {
+        gameOver();
+        return alert(curr + " won the Game!!!!");
+      } else if (this.state.One === curr && this.state.Four === curr && this.state.Seven === curr) {
+        gameOver();
+        return alert(curr + " won the Game!!!!");
+      } else if (this.state.Two === curr&& this.state.Five === curr && this.state.Eight === curr) {
+        gameOver();
+        return alert(curr + " won the Game!!!!");
+      } else if (this.state.One === curr&& this.state.Five === curr && this.state.Nine=== curr) {
+        gameOver();
+        return alert(curr + " won the Game!!!!");
+      } else if (this.state.Three === curr&& this.state.Five === curr && this.state.Seven=== curr) {
+        gameOver();
+        return alert(curr + " won the Game!!!!");
+      }
+    }
+
+    var gameOver = () => {
+      this.setState({
+        gameOn: false
+      })
+    }
+
+    checkBothXY('X');
+    checkBothXY('O');
+    console.log(this.state.gameOn)
+  }
+
+
+
 
 
   render () {
